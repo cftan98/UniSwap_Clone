@@ -1,4 +1,4 @@
-import { Card, Space, Select, Button, Modal } from 'antd';
+import { Row, Col, Card, Space, Select, Button, InputNumber } from 'antd';
 import React, { useEffect, useState } from 'react';
 import ETHIcon from '../TokenIcon/ETH.png';
 import { DownOutlined } from '@ant-design/icons';
@@ -15,17 +15,18 @@ const cardStyle = {
 
 export default function MyCard() {
     const [source, setSource] = useState('ETH')
+    const [sourceValue, setSourceValue] = useState(0);
     const [target, setTarget] = useState()
-
     const [openSoureModel, setOpenModel] = useState(false)
 
     useEffect(() => {
         console.log(openSoureModel)
     }, [openSoureModel]);
 
-    // const handleChangeSource = (value) => {
-    //     setSource(value);
-    // }
+    const handleChangeSourceValue = (v) => {
+        const value = parseFloat(v);
+        setSourceValue(value);
+    }
 
     const openSourceModel = () => {
         setOpenModel((value) => {
@@ -56,17 +57,33 @@ export default function MyCard() {
                     style={cardStyle}
                     hoverable={false}
                 >
-                    <Button
-                        style={{
-                            backgroundColor: 'rgb(28, 28, 28)',
-                            borderRadius: '10px',
-                            color: 'white',
-                            fontWeight: '500'
-                        }}
-                        icon={<DownOutlined />}
-                        onClick={() => openSourceModel()}
-                    >{source}
-                    </Button>
+                    <Row align='middle'>
+                        <Col span={16}>
+                            <Button
+                                style={{
+                                    backgroundColor: 'rgb(28, 28, 28)',
+                                    borderRadius: '10px',
+                                    color: 'white',
+                                    fontWeight: '500'
+                                }}
+                                icon={<DownOutlined />}
+                                onClick={() => openSourceModel()}
+                            >
+                                {source}
+                            </Button>
+                        </Col>
+                        <Col span={8}>
+                            <InputNumber
+                                size='large'
+                                style={{ color: 'white', fontSize: '20    px' }}
+                                bordered={false}
+                                placeholder="0.0"
+                                onChange={(e) => handleChangeSourceValue(e)}
+                                min={0}
+                                value={sourceValue}
+                            />
+                        </Col>
+                    </Row>
                 </Card.Grid>
                 <Card.Grid
                     style={cardStyle}
@@ -91,7 +108,7 @@ export default function MyCard() {
                     fontWeight: "500",
                 }}>
                     Connect Wallet
-            </button>
+                </button>
             </Card>
         </React.Fragment>
     )

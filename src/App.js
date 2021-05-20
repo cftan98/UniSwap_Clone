@@ -1,8 +1,17 @@
+import { Row, Col } from 'antd';
+import MyCard from './components/MyCard';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Hello</h1>
+    <div>
+      <Row
+        justify='center'
+        style={{marginTop: '10%'}}
+      >
+        <Col>
+          <MyCard />
+        </Col>
+      </Row>
     </div>
   );
 }

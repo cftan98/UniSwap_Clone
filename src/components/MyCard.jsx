@@ -1,27 +1,60 @@
-import { Row, Col, Card, Space, Select, Button, InputNumber } from 'antd';
+import {
+    Row,
+    Col,
+    Card,
+    Space,
+    Select,
+    Button,
+    InputNumber
+} from 'antd';
 import React, { useEffect, useState } from 'react';
+import {
+    DownOutlined,
+    SettingOutlined,
+    ArrowDownOutlined
+} from '@ant-design/icons';
+
 import ETHIcon from '../TokenIcon/ETH.png';
-import { DownOutlined } from '@ant-design/icons';
 import SourceModel from './SourceModel';
 
 const { Option } = Select;
 
 const cardStyle = {
-    backgroundColor: 'rgb(44, 47, 54)',
+    width: '480px',
+    borderRadius: '24px',
+    padding: '10px',
+    backgroundColor: 'rgb(25, 27, 31)',
+    boxShadow: 'rgb(0 0 0 / 1%) 0px 0px 1px, rgb(0 0 0 / 4%) 0px 4px 8px, rgb(0 0 0 / 4%) 0px 16px 24px, rgb(0 0 0 / 1%) 0px 24px 32px',
+    color: "white",
+    fontSize: '16px',
+}
+
+const innerCardStyle = {
+    backgroundColor: 'rgb(33, 36, 41)',
     width: '100%',
-    marginBottom: '10px',
+    height: '100px',
+    //marginBottom: '10px',
     borderRadius: '15px',
+}
+
+const buttonStyle = {
+    marginLeft: '10px',
+    padding: '5px 0 5px 5px',
+    backgroundColor: 'rgb(25, 27, 31)',
+    borderRadius: '10px',
+    color: 'white',
+    fontWeight: '500',
 }
 
 export default function MyCard() {
     const [source, setSource] = useState('ETH')
-    const [sourceValue, setSourceValue] = useState(0);
-    const [target, setTarget] = useState()
+    const [sourceValue, setSourceValue] = useState(0.0);
+    const [target, setTarget] = useState("Please Select")
     const [openSoureModel, setOpenModel] = useState(false)
 
-    useEffect(() => {
-        console.log(openSoureModel)
-    }, [openSoureModel]);
+    // useEffect(() => {
+    //     console.log(openSoureModel)
+    // }, [openSoureModel]);
 
     const handleChangeSourceValue = (v) => {
         const value = parseFloat(v);
@@ -38,44 +71,39 @@ export default function MyCard() {
     return (
         <React.Fragment>
             <SourceModel open={openSoureModel} toggleModel={openSourceModel} />
-            <Card
-                style={{
-                    width: '480px',
-                    borderRadius: '24px',
-                    padding: '10px',
-                    backgroundColor: 'rgb(25, 27, 31)',
-                    boxShadow: 'rgb(0 0 0 / 1%) 0px 0px 1px, rgb(0 0 0 / 4%) 0px 4px 8px, rgb(0 0 0 / 4%) 0px 16px 24px, rgb(0 0 0 / 1%) 0px 24px 32px',
-                    color: "white",
-                    fontSize: '16px',
-                }}
+            <div
+                style={cardStyle}
             >
-                <div style={{ marginLeft: '20px', marginTop: '5px', display: 'inline-block' }}>
-                    <h3 style={{ color: 'white' }}>Swap</h3>
-                </div>
+                <Row style={{ marginLeft: '20px', marginTop: '5px' }}>
+                    <Col span={22}>
+                        <h3 style={{ color: 'white' }}>Swap</h3>
+                    </Col>
+                    <Col span={2}>
+                        <SettingOutlined />
+                    </Col>
+                </Row>
 
-                <Card.Grid
-                    style={cardStyle}
-                    hoverable={false}
+                <div
+                    style={innerCardStyle}
                 >
-                    <Row align='middle'>
-                        <Col span={16}>
-                            <Button
-                                style={{
-                                    backgroundColor: 'rgb(28, 28, 28)',
-                                    borderRadius: '10px',
-                                    color: 'white',
-                                    fontWeight: '500'
-                                }}
-                                icon={<DownOutlined />}
+                    <Row align='middle' justify='space-between'>
+                        <Col span={6} style={{ marginTop: '15px' }}>
+                            <div
+                                style={buttonStyle}
                                 onClick={() => openSourceModel()}
                             >
-                                {source}
-                            </Button>
+                                <Space align='center'>
+                                    <img src={ETHIcon} style={{ height: "30px", width: '30px' }} />
+                                    {source}
+                                    <DownOutlined />
+                                </Space>
+                            </div>
                         </Col>
-                        <Col span={8}>
+
+                        <Col span={6} style={{ marginTop: '15px' }}>
                             <InputNumber
                                 size='large'
-                                style={{ color: 'white', fontSize: '20    px' }}
+                                style={{ color: 'white', fontSize: '20px', WebkitAppearance: 'none' }}
                                 bordered={false}
                                 placeholder="0.0"
                                 onChange={(e) => handleChangeSourceValue(e)}
@@ -84,14 +112,47 @@ export default function MyCard() {
                             />
                         </Col>
                     </Row>
-                </Card.Grid>
-                <Card.Grid
-                    style={cardStyle}
-                    hoverable={false}
+
+                    <Row align='middle' justify='space-between'>
+                        <Col span={2} style={{ marginTop: '5px', marginLeft: '10px' }}>
+                            -
+                        </Col>
+
+                        <Col span={2}>
+                            $1
+                        </Col>
+
+                    </Row>
+                </div>
+
+                <div style={{
+                    paddingLeft: "4.5px",
+                    borderRadius: "12px",
+                    height: "32px",
+                    width: "32px",
+                    position: 'relative',
+                    marginTop: '-14px',
+                    marginBottom: '-14px',
+                    /* position: relative; */
+                    /* margin-top: -14px; */
+                    /* margin-bottom: -14px; */
+                    left: "calc(50% - 16px)",
+                    backgroundColor: "rgb(33, 36, 41)",
+                    border: "4px solid rgb(25, 27, 31)",
+                    zIndex: "2",
+                }}>
+                    <ArrowDownOutlined />
+                </div>
+
+
+                <div
+                    style={innerCardStyle}
                 >
-                    Target
-            </Card.Grid>
+
+                </div>
+
                 <button style={{
+                    marginTop: '15px',
                     padding: "16px",
                     width: "100%",
                     textAlign: "center",
@@ -109,7 +170,7 @@ export default function MyCard() {
                 }}>
                     Connect Wallet
                 </button>
-            </Card>
+            </div>
         </React.Fragment>
     )
 }

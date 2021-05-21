@@ -13,3 +13,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.darkModal .ant-modal-header,
+.darkModal .ant-modal-content {
+  background-color: rgb(25, 27, 31);
+  color: white;
+  border-radius: 20px;
+}
+
+

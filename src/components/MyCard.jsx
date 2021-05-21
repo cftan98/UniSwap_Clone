@@ -5,7 +5,7 @@ import {
     Space,
     Select,
     Button,
-    InputNumber
+    Input
 } from 'antd';
 import React, { useEffect, useState } from 'react';
 import {
@@ -15,7 +15,9 @@ import {
 } from '@ant-design/icons';
 
 import ETHIcon from '../TokenIcon/ETH.png';
+import DAI_Icon from '../TokenIcon/DAI.png';
 import SourceModel from './SourceModel';
+import ETH from './TokenComponents/ETH';
 
 const { Option } = Select;
 
@@ -33,11 +35,10 @@ const innerCardStyle = {
     backgroundColor: 'rgb(33, 36, 41)',
     width: '100%',
     height: '100px',
-    //marginBottom: '10px',
     borderRadius: '15px',
 }
 
-const buttonStyle = {
+const selectButtonStyle = {
     marginLeft: '10px',
     padding: '5px 0 5px 5px',
     backgroundColor: 'rgb(25, 27, 31)',
@@ -68,9 +69,31 @@ export default function MyCard() {
         });
     }
 
+    const checkSelectSource = () => {
+        if (source && source === 'ETH') {
+            return (
+                <>
+                    <img src={ETHIcon} style={{ height: "30px", width: '30px' }} />
+                    {source}
+                </>
+            )
+        } else if (source && source === "DAI") {
+            return (
+                <>
+                    <img src={DAI_Icon} style={{ height: "30px", width: '30px' }} />
+                    {source}
+                </>
+            )
+        }
+    }
+
     return (
         <React.Fragment>
-            <SourceModel open={openSoureModel} toggleModel={openSourceModel} />
+            <SourceModel
+                open={openSoureModel}
+                toggleModel={openSourceModel}
+            />
+
             <div
                 style={cardStyle}
             >
@@ -89,26 +112,26 @@ export default function MyCard() {
                     <Row align='middle' justify='space-between'>
                         <Col span={6} style={{ marginTop: '15px' }}>
                             <div
-                                style={buttonStyle}
+                                style={selectButtonStyle}
                                 onClick={() => openSourceModel()}
                             >
                                 <Space align='center'>
-                                    <img src={ETHIcon} style={{ height: "30px", width: '30px' }} />
-                                    {source}
+                                    {checkSelectSource()}
                                     <DownOutlined />
                                 </Space>
                             </div>
                         </Col>
 
-                        <Col span={6} style={{ marginTop: '15px' }}>
-                            <InputNumber
-                                size='large'
-                                style={{ color: 'white', fontSize: '20px', WebkitAppearance: 'none' }}
+                        <Col span={18} style={{ marginTop: '15px' }}>
+                            <Input
+                                placeholder="Borderless"
                                 bordered={false}
-                                placeholder="0.0"
-                                onChange={(e) => handleChangeSourceValue(e)}
-                                min={0}
-                                value={sourceValue}
+                                style={{
+                                    color: 'white',
+                                    fontSize: '20px',
+                                    textAlign: 'right'
+                                }}
+                                placeholder={"0.0"}
                             />
                         </Col>
                     </Row>
@@ -119,9 +142,8 @@ export default function MyCard() {
                         </Col>
 
                         <Col span={2}>
-                            $1
+                            $-
                         </Col>
-
                     </Row>
                 </div>
 
@@ -133,9 +155,6 @@ export default function MyCard() {
                     position: 'relative',
                     marginTop: '-14px',
                     marginBottom: '-14px',
-                    /* position: relative; */
-                    /* margin-top: -14px; */
-                    /* margin-bottom: -14px; */
                     left: "calc(50% - 16px)",
                     backgroundColor: "rgb(33, 36, 41)",
                     border: "4px solid rgb(25, 27, 31)",
@@ -144,11 +163,46 @@ export default function MyCard() {
                     <ArrowDownOutlined />
                 </div>
 
-
                 <div
                     style={innerCardStyle}
                 >
+                    {/* <Row align='middle' justify='space-between'>
+                        <Col span={6} style={{ marginTop: '15px' }}>
+                            <div
+                                style={selectButtonStyle}
+                            //onClick={() => openSourceModel()}
+                            >
+                                <Space align='center'>
+                                    <img src={ETHIcon} style={{ height: "30px", width: '30px' }} />
+                                    {source}
+                                    <DownOutlined />
+                                </Space>
+                            </div>
+                        </Col>
 
+                        <Col span={18} style={{ marginTop: '15px' }}>
+                            <Input
+                                placeholder="Borderless"
+                                bordered={false}
+                                style={{
+                                    color: 'white',
+                                    fontSize: '20px',
+                                    textAlign: 'right'
+                                }}
+                                placeholder={"0.0"}
+                            />
+                        </Col>
+                    </Row>
+
+                    <Row align='middle' justify='space-between'>
+                        <Col span={2} style={{ marginTop: '5px', marginLeft: '10px' }}>
+                            -
+                        </Col>
+
+                        <Col span={2}>
+                            $-
+                        </Col>
+                    </Row> */}
                 </div>
 
                 <button style={{

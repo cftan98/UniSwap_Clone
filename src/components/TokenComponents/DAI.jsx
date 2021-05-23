@@ -1,8 +1,9 @@
 import Icon from '../../TokenIcon/DAI.png'
 
-export default function DAI() {
+export default function DAI({ handleChangeSource }) {
     return (
         <div
+            id={'DAI'}
             style={{
                 borderRadius: '15px',
                 backgroundColor: 'rgb(33, 36, 41)',
@@ -11,6 +12,9 @@ export default function DAI() {
                 padding: '5px 0 0.5px 0',
                 marginBottom: '10px',
                 cursor: 'pointer'
+            }}
+            onClick={() => {
+                handleChangeSource("DAI");
             }}
         >
             <span>

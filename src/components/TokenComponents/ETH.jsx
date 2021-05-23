@@ -1,6 +1,6 @@
 import Icon from '../../TokenIcon/ETH.png'
 
-export default function ETH() {
+export default function ETH({ handleChangeSource }) {
     return (
         <div
             style={{
@@ -11,6 +11,9 @@ export default function ETH() {
                 padding: '5px 0 0.5px 0',
                 marginBottom: '10px',
                 cursor: 'pointer'
+            }}
+            onClick={() => {
+                handleChangeSource("ETH");
             }}
         >
             <span>

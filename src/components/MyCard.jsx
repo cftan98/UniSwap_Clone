@@ -17,7 +17,7 @@ import {
 import ETHIcon from '../TokenIcon/ETH.png';
 import DAI_Icon from '../TokenIcon/DAI.png';
 import SourceModel from './SourceModel';
-import ETH from './TokenComponents/ETH';
+//import ETH from './TokenComponents/ETH';
 
 const { Option } = Select;
 
@@ -57,32 +57,56 @@ export default function MyCard() {
     //     console.log(openSoureModel)
     // }, [openSoureModel]);
 
-    const handleChangeSourceValue = (v) => {
-        const value = parseFloat(v);
+    const handleChangeSourceValue = (e) => {
+        const value = parseFloat(e.target.value);
         setSourceValue(value);
+    }
+
+    const calculateToUSD = () => {
+        switch (source) {
+            case ("ETH"):
+                return Math.round(sourceValue * 2118.98 * 100) / 100
+
+            case ("DAI"):
+                return sourceValue * 1
+        }
     }
 
     const openSourceModel = () => {
         setOpenModel((value) => {
-            value = !value
+            value = !value;
             return value
         });
+    }
+
+    const handleChangeSourceToken = (source) => {
+        setSource(source);
+        setOpenModel((value) => {
+            value = !value;
+            return value;
+        })
     }
 
     const checkSelectSource = () => {
         if (source && source === 'ETH') {
             return (
-                <>
+                <Space
+                    style={{ cursor: 'pointer' }}
+                >
                     <img src={ETHIcon} style={{ height: "30px", width: '30px' }} />
                     {source}
-                </>
+                    <DownOutlined />
+                </Space>
             )
         } else if (source && source === "DAI") {
             return (
-                <>
+                <Space
+                    style={{ cursor: 'pointer' }}
+                >
                     <img src={DAI_Icon} style={{ height: "30px", width: '30px' }} />
                     {source}
-                </>
+                    <DownOutlined />
+                </Space>
             )
         }
     }
@@ -92,6 +116,7 @@ export default function MyCard() {
             <SourceModel
                 open={openSoureModel}
                 toggleModel={openSourceModel}
+                handleChangeSource={handleChangeSourceToken}
             />
 
             <div
@@ -117,7 +142,6 @@ export default function MyCard() {
                             >
                                 <Space align='center'>
                                     {checkSelectSource()}
-                                    <DownOutlined />
                                 </Space>
                             </div>
                         </Col>
@@ -132,6 +156,7 @@ export default function MyCard() {
                                     textAlign: 'right'
                                 }}
                                 placeholder={"0.0"}
+                                onChange={(e) => handleChangeSourceValue(e)}
                             />
                         </Col>
                     </Row>
@@ -141,8 +166,13 @@ export default function MyCard() {
                             -
                         </Col>
 
-                        <Col span={2}>
-                            $-
+                        <Col style={{ float: 'right', marginRight: '10px' }}>
+                            ~${sourceValue ?
+                                calculateToUSD()
+                                //Math.round(sourceValue * 2118.98 * 100) / 100
+                                :
+                                ""
+                            }
                         </Col>
                     </Row>
                 </div>

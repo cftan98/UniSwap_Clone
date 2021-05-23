@@ -14,8 +14,8 @@ export default function SourceModel(props) {
         >
             <h2 style={{ color: 'white' }}>Select a token</h2>
             <Space>
-                <ETH />
-                <DAI />
+                <ETH handleChangeSource={props.handleChangeSource} />
+                <DAI handleChangeSource={props.handleChangeSource} />
             </Space>
         </Modal>
     )

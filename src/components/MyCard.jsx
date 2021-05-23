@@ -76,9 +76,28 @@ export default function MyCard() {
                 else if (target === "ETH") {
                     { sourceValue ? setTargeteValue(sourceValue) : setTargeteValue(0.0) }
                 }
+            } else if (source === "WBTC") {
+                if (target === "ETH") {
+                    //1 : 0.0610924
+                    { sourceValue ? setTargeteValue(Math.round(sourceValue * 16.3964 * 1000000) / 1000000) : setTargeteValue(0.0) }
+                }
+                else if (target === "DAI") {
+                    // 1 : 2118.98
+                    { sourceValue ? setTargeteValue(Math.round(sourceValue * 34321.1 * 1000000) / 1000000) : setTargeteValue(0.0) }
+                }
+                else if (target === "WBTC") {
+                    { sourceValue ? setTargeteValue(sourceValue) : setTargeteValue(0.0) }
+                }
             }
         }
     }, [source, target, sourceValue]);
+
+    const swap = () => {
+        if (target !== "Select Token") {
+            setSource(target);
+            setTarget(source);
+        }
+    }
 
     const handleChangeSourceValue = (e) => {
         const value = parseFloat(e.target.value);
@@ -317,7 +336,10 @@ export default function MyCard() {
                     backgroundColor: "rgb(33, 36, 41)",
                     border: "4px solid rgb(25, 27, 31)",
                     zIndex: "2",
-                }}>
+                    cursor: 'pointer',
+                }}
+                    onClick={() => swap()}
+                >
                     <ArrowDownOutlined />
                 </div>
 

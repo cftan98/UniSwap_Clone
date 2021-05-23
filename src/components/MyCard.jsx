@@ -59,9 +59,26 @@ export default function MyCard() {
     const [openSoureModel, setOpenSourceModal] = useState(false)
     const [openTargetModel, setOpenTargetModal] = useState(false)
 
-    // useEffect(() => {
-    //     console.log(openSoureModel)
-    // }, [openSoureModel]);
+    useEffect(() => {
+        console.log(source)
+        console.log(target)
+
+        if (target !== "Select Token") {
+            if (source === "ETH") {
+                if (target === "WBTC") {
+                    //1 : 0.0610924
+                    { sourceValue ? setTargeteValue(Math.round(sourceValue * 0.0610924 * 1000000) / 1000000) : setTargeteValue(0.0) }
+                }
+                else if (target === "DAI") {
+                    // 1 : 2118.98
+                    { sourceValue ? setTargeteValue(Math.round(sourceValue * 0.0000295 * 1000000) / 1000000) : setTargeteValue(0.0) }
+                }
+                else if (target === "ETH") {
+                    { sourceValue ? setTargeteValue(sourceValue) : setTargeteValue(0.0) }
+                }
+            }
+        }
+    }, [source, target, sourceValue]);
 
     const handleChangeSourceValue = (e) => {
         const value = parseFloat(e.target.value);
@@ -106,7 +123,7 @@ export default function MyCard() {
         setOpenTargetModal(value => {
             value = !value;
             return value
-        })
+        });
     }
 
     const checkSelectSource = () => {
@@ -146,7 +163,7 @@ export default function MyCard() {
         }
     }
 
-    const checkTarget = () => {
+    const checkSelectTarget = () => {
         if (target === "Select Token") {
             return (
                 <Col span={6} style={{ marginTop: '15px' }}>
@@ -231,6 +248,7 @@ export default function MyCard() {
                 toggleModel={openStateSrouceModal}
                 handleChangeSource={handleChangeSourceToken}
             />
+
             <TargetModel
                 open={openTargetModel}
                 toggleModel={openStateTargetModel}
@@ -307,7 +325,7 @@ export default function MyCard() {
                     style={innerCardStyle}
                 >
                     <Row align='middle' justify='space-between'>
-                        {checkTarget()}
+                        {checkSelectTarget()}
 
 
                         <Col span={16} style={{ marginTop: '15px' }}>
@@ -320,6 +338,7 @@ export default function MyCard() {
                                     textAlign: 'right'
                                 }}
                                 placeholder={"0.0"}
+                                value={TargetValue}
                             />
                         </Col>
                     </Row>
@@ -329,8 +348,8 @@ export default function MyCard() {
                             -
                         </Col>
 
-                        <Col span={2}>
-                            $-
+                        <Col style={{ float: 'right', marginRight: '10px' }}>
+                            ~${target !== "Select Token" && sourceValue ? calculateToUSD() : ""}
                         </Col>
                     </Row>
                 </div>

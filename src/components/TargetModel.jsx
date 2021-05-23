@@ -15,7 +15,7 @@ export default function TargetModel(props) {
             <h2 style={{ color: 'white' }}>Select a token</h2>
             <Space>
                 <ETH handleChangeSource={props.handleChangeSource} />
-                <DAI handleChangeSource={props.handleChangeSource} />
+                {/* <DAI handleChangeSource={props.handleChangeSource} /> */}
                 <WBTC handleChangeSource={props.handleChangeSource} />
             </Space>
         </Modal>

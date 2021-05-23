@@ -3,8 +3,7 @@ import DAI from './TokenComponents/DAI';
 import ETH from './TokenComponents/ETH';
 import WBTC from './TokenComponents/WBTC';
 
-export default function SourceModel(props) {
-
+export default function TargetModel(props) {
     return (
         <Modal
             className='darkModal'
@@ -20,5 +19,5 @@ export default function SourceModel(props) {
                 <WBTC handleChangeSource={props.handleChangeSource} />
             </Space>
         </Modal>
-    )
+    );
 }

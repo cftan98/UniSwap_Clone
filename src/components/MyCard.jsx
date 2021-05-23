@@ -14,9 +14,12 @@ import {
     ArrowDownOutlined
 } from '@ant-design/icons';
 
-import ETHIcon from '../TokenIcon/ETH.png';
+import ETH_Icon from '../TokenIcon/ETH.png';
 import DAI_Icon from '../TokenIcon/DAI.png';
+import WBTC_Icon from '../TokenIcon/WBTC.png';
+
 import SourceModel from './SourceModel';
+import TargetModel from './TargetModel';
 //import ETH from './TokenComponents/ETH';
 
 const { Option } = Select;
@@ -50,8 +53,11 @@ const selectButtonStyle = {
 export default function MyCard() {
     const [source, setSource] = useState('ETH')
     const [sourceValue, setSourceValue] = useState(0.0);
-    const [target, setTarget] = useState("Please Select")
-    const [openSoureModel, setOpenModel] = useState(false)
+    const [target, setTarget] = useState("Select Token")
+    const [TargetValue, setTargeteValue] = useState(0.0);
+
+    const [openSoureModel, setOpenSourceModal] = useState(false)
+    const [openTargetModel, setOpenTargetModal] = useState(false)
 
     // useEffect(() => {
     //     console.log(openSoureModel)
@@ -66,14 +72,22 @@ export default function MyCard() {
         switch (source) {
             case ("ETH"):
                 return Math.round(sourceValue * 2118.98 * 100) / 100
-
             case ("DAI"):
                 return sourceValue * 1
+            case ("WBTC"):
+                return Math.round(sourceValue * 33815.3 * 100) / 100
         }
     }
 
-    const openSourceModel = () => {
-        setOpenModel((value) => {
+    const openStateSrouceModal = () => {
+        setOpenSourceModal((value) => {
+            value = !value;
+            return value
+        });
+    }
+
+    const openStateTargetModel = () => {
+        setOpenTargetModal((value) => {
             value = !value;
             return value
         });
@@ -81,9 +95,17 @@ export default function MyCard() {
 
     const handleChangeSourceToken = (source) => {
         setSource(source);
-        setOpenModel((value) => {
+        setOpenSourceModal((value) => {
             value = !value;
             return value;
+        })
+    }
+
+    const handleChangeTargetToken = (t) => {
+        setTarget(t);
+        setOpenTargetModal(value => {
+            value = !value;
+            return value
         })
     }
 
@@ -91,9 +113,10 @@ export default function MyCard() {
         if (source && source === 'ETH') {
             return (
                 <Space
+                    align='center'
                     style={{ cursor: 'pointer' }}
                 >
-                    <img src={ETHIcon} style={{ height: "30px", width: '30px' }} />
+                    <img src={ETH_Icon} style={{ height: "30px", width: '30px' }} />
                     {source}
                     <DownOutlined />
                 </Space>
@@ -101,6 +124,7 @@ export default function MyCard() {
         } else if (source && source === "DAI") {
             return (
                 <Space
+                    align='center'
                     style={{ cursor: 'pointer' }}
                 >
                     <img src={DAI_Icon} style={{ height: "30px", width: '30px' }} />
@@ -108,6 +132,95 @@ export default function MyCard() {
                     <DownOutlined />
                 </Space>
             )
+        } else if (source && source === "WBTC") {
+            return (
+                <Space
+                    align='center'
+                    style={{ cursor: 'pointer' }}
+                >
+                    <img src={WBTC_Icon} style={{ height: "30px", width: '30px', borderRadius: '24px' }} />
+                    {source}
+                    <DownOutlined style={{ marginLeft: '-5px' }} />
+                </Space>
+            )
+        }
+    }
+
+    const checkTarget = () => {
+        if (target === "Select Token") {
+            return (
+                <Col span={6} style={{ marginTop: '15px' }}>
+                    <div
+                        style={{
+                            marginLeft: '10px',
+                            backgroundColor: 'rgb(33, 114, 229)',
+                            fontWeight: 500,
+                            borderRadius: '16px',
+                            height: '2.4rem',
+                            textAlign: 'center',
+                            fontSize: '15px',
+                            paddingTop: '8px',
+                            cursor: 'pointer'
+                        }}
+                        onClick={() => openStateTargetModel()}
+                    >
+                        {target}
+                    </div>
+                </Col>
+            )
+        } else {
+            if (target && target === 'ETH') {
+                return (
+                    <Col
+                        span={6}
+                        style={{ marginTop: '15px', ...selectButtonStyle }}
+                        onClick={() => openStateTargetModel()}
+                    >
+                        <Space
+                            align='center'
+                            style={{ cursor: 'pointer' }}
+                        >
+                            <img src={ETH_Icon} style={{ height: "30px", width: '30px' }} />
+                            {target}
+                            <DownOutlined />
+                        </Space>
+                    </Col>
+                )
+            } else if (target && target === "DAI") {
+                return (
+                    <Col
+                        span={6}
+                        style={{ marginTop: '15px', ...selectButtonStyle }}
+                        onClick={() => openStateTargetModel()}
+                    >
+                        <Space
+                            align='center'
+                            style={{ cursor: 'pointer' }}
+                        >
+                            <img src={DAI_Icon} style={{ height: "30px", width: '30px' }} />
+                            {target}
+                            <DownOutlined />
+                        </Space>
+                    </Col>
+                )
+            } else if (target && target === "WBTC") {
+                return (
+                    <Col
+                        span={6}
+                        style={{ marginTop: '15px', ...selectButtonStyle }}
+                        onClick={() => openStateTargetModel()}
+                    >
+                        <Space
+                            align='center'
+                            style={{ cursor: 'pointer' }}
+                        >
+                            <img src={WBTC_Icon} style={{ height: "30px", width: '30px', borderRadius: '24px' }} />
+                            {target}
+                            <DownOutlined style={{ marginLeft: '-5px' }} />
+                        </Space>
+                    </Col>
+                )
+            }
         }
     }
 
@@ -115,8 +228,13 @@ export default function MyCard() {
         <React.Fragment>
             <SourceModel
                 open={openSoureModel}
-                toggleModel={openSourceModel}
+                toggleModel={openStateSrouceModal}
                 handleChangeSource={handleChangeSourceToken}
+            />
+            <TargetModel
+                open={openTargetModel}
+                toggleModel={openStateTargetModel}
+                handleChangeSource={handleChangeTargetToken}
             />
 
             <div
@@ -135,18 +253,11 @@ export default function MyCard() {
                     style={innerCardStyle}
                 >
                     <Row align='middle' justify='space-between'>
-                        <Col span={6} style={{ marginTop: '15px' }}>
-                            <div
-                                style={selectButtonStyle}
-                                onClick={() => openSourceModel()}
-                            >
-                                <Space align='center'>
-                                    {checkSelectSource()}
-                                </Space>
-                            </div>
+                        <Col span={6} style={{ marginTop: '15px', ...selectButtonStyle }} onClick={() => openStateSrouceModal()}>
+                            {checkSelectSource()}
                         </Col>
 
-                        <Col span={18} style={{ marginTop: '15px' }}>
+                        <Col span={16} style={{ marginTop: '15px' }}>
                             <Input
                                 placeholder="Borderless"
                                 bordered={false}
@@ -169,7 +280,6 @@ export default function MyCard() {
                         <Col style={{ float: 'right', marginRight: '10px' }}>
                             ~${sourceValue ?
                                 calculateToUSD()
-                                //Math.round(sourceValue * 2118.98 * 100) / 100
                                 :
                                 ""
                             }
@@ -196,21 +306,11 @@ export default function MyCard() {
                 <div
                     style={innerCardStyle}
                 >
-                    {/* <Row align='middle' justify='space-between'>
-                        <Col span={6} style={{ marginTop: '15px' }}>
-                            <div
-                                style={selectButtonStyle}
-                            //onClick={() => openSourceModel()}
-                            >
-                                <Space align='center'>
-                                    <img src={ETHIcon} style={{ height: "30px", width: '30px' }} />
-                                    {source}
-                                    <DownOutlined />
-                                </Space>
-                            </div>
-                        </Col>
+                    <Row align='middle' justify='space-between'>
+                        {checkTarget()}
 
-                        <Col span={18} style={{ marginTop: '15px' }}>
+
+                        <Col span={16} style={{ marginTop: '15px' }}>
                             <Input
                                 placeholder="Borderless"
                                 bordered={false}
@@ -232,7 +332,7 @@ export default function MyCard() {
                         <Col span={2}>
                             $-
                         </Col>
-                    </Row> */}
+                    </Row>
                 </div>
 
                 <button style={{

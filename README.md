@@ -1,2 +1,2 @@
-# A copy of UniSwap using React (Frontend Only)
-The project is currently under development localy
+# A copy of UniSwap using React (Frontend only just for fun)
+DO NOT USE IT ON PURPOSE BECAUSE IT IS JUST FOR FUN!
